@@ -1,0 +1,23 @@
+# Hydrogen bond analysis with cpptraj 
+# Load topology and trajectory
+parm /mnt/esclavo4TB/sixto/minimizado_HMPPK/HMPPK_pH7_solv.prmtop
+trajin /mnt/esclavo4TB/sixto/rep1/HMPPK_eq_prod_rep1.nc 1000 last 1
+trajin /mnt/esclavo4TB/sixto/rep2/HMPPK_eq_prod_rep2.nc 1000 last 1
+trajin /mnt/esclavo4TB/sixto/rep3/HMPPK_eq_prod_rep3.nc 1000 last 1
+trajin /mnt/esclavo4TB/sixto/rep4/HMPPK_eq_prod_rep4.nc 1000 last 1
+
+hbond All out All.hbvtime_HMPPK.dat solventdonor :WAT solventacceptor :WAT@O \
+  avgout All.UU.avg_HMPPK.dat solvout All.UV.avg_HMPPK.dat bridgeout All.bridge.avg_HMPPK.dat
+  
+# Backbone hydrogen bonds only. Save time series data. Select residues
+
+hbond Backbone :1-258@C,O,N,H avgout BB.avg_HMPPK.dat series uuseries bbhbond_HMPPK.gnu
+
+# Create file containing only number of solute-solute and solute-solvent
+# hydrogen bonds, and number of solute-solvent-solute bridges.
+create nhbvtime_HMPPK.agr All[UU] Backbone[UU] All[UV] All[Bridge]
+# Run to actually find hydrogen bonds and generate data.
+run
+# Perform lifetime analysis on backbone hydrogen bonds
+lifetime Backbone[solutehb] out backbone.lifetime_HMPPK.dat
+runanalysis

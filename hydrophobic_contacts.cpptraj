@@ -1,0 +1,12 @@
+#cpptraj scripts for hydrophobic contacts
+#load parameters and trajectories
+parm   /mnt/esclavo4TB/sixto/minimizado_HMPPK/HMPPK_pH7_solv.prmtop
+trajin /mnt/esclavo4TB/sixto/rep1/HMPPK_eq_prod_rep1.nc  1000 last 1
+trajin /mnt/esclavo4TB/sixto/rep2/HMPPK_eq_prod_rep2.nc  1000 last 1
+trajin /mnt/esclavo4TB/sixto/rep3/HMPPK_eq_prod_rep3.nc  1000 last 1
+trajin /mnt/esclavo4TB/sixto/rep4/HMPPK_eq_prod_rep4.nc  1000 last 1
+#reference frame
+reference /mnt/esclavo4TB/sixto/rep1/HMPPK_eq_prod_rep1.ncrst
+
+nativecontacts :ALA,PHE,PRO,LEU,MET,VAL,ILE,PHE,TRP&!@H= writecontacts output/writecontacts_HMPPK_x-ray_hf.dat resoffset 3 resout output/resout_HMPPK_x-ray_hf.dat out output/out_HMPPK_x-ray_hf.dat ref /mnt/esclavo4TB/sixto/rep1/HMPPK_eq_prod_rep1.ncrst contactpdb output/contact_pdb_HMPPK_x-ray_hf.pdb byresidue map mapout output/mappout_HMPPK_x-ray_hf.gnu distance 5.0 series resseries present
+
